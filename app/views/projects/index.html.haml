@@ -1,0 +1,188 @@
+.content_area
+  .content_header
+    %a{href: "#"}
+      Show Project Details
+      = image_tag "arrow.png"
+  #project_pagination
+    = will_paginate(@projects, :renderer => WillPaginate::ActionView::LinkRenderer)
+  .tab_bg  
+  .tabs
+    %ul
+      %li
+        = link_to "All Projects", projects_path, :id => "all_project"
+      %li
+        %a{href: projects_path(:with=>"my_project"), :id => "my_project"} My Projects
+      %li
+        %a{href: projects_path(:with => "upcoming_project"), :id => "upcoming_project"} Upcoming Projects
+      %li
+        %a{href: projects_path(:with => "completed_project"), :id => "completed_project"} Completed Projects
+  .clearfix
+  -if params[:with] == "upcoming_project"
+    - @projects.each do |project|
+      - if project.status == "Pending"
+        #slideToggle.msgactive.msg
+          .profile_pic
+            - if params[:with] =="my_project"
+              = image_tag current_user.avatar.tiny.url
+            -else
+              = image_tag User.find_by_id(project.user_id).avatar.tiny.url
+          .time_btn
+            %a{href: "#"}
+              = project.created_at.strftime("%H:%M " '%d.%m.%Y')
+          .content_text
+            %h3
+              = project.project_title
+            %p
+              = truncate("#{project.project_details}", :length => 70)
+          .new_msgs
+            %h3 2
+            %a{href: "#"} New Messages
+            %p
+              = project.project_starts_on
+            %p
+              = project.project_ends_on
+          .drop_arrow
+            %a{href: "#"} arrow
+        .info_main_box
+          .info
+            = project.invite_people
+            %textarea{cols: "50", rows: "4"}
+              = project.project_details
+          .info
+            = project.status
+            .attch_box
+              .attach
+                - project.pictures.each do |picture|
+                  = image_tag picture.attachment.tiny.url
+              .attach
+                = link_to "Attach New File", new_picture_path(:project_id => params[:project_id]), :class => "file_attach"
+                = hidden_field_tag :project_id, :value => "#{project.id}"
+          .info
+            =image_tag "chat.png"
+            .chat_box
+              %textarea{cols: "50", rows: "1"}
+              %a{href: "#"}
+                = image_tag "attachment.png"
+            .clearfix
+  - elsif params[:with] == "completed_project"
+    - @projects.each do |project|
+      - if project.status == "Completed"
+        #slideToggle.msgactive.msg
+          .profile_pic
+            - if params[:with] =="my_project"
+              = image_tag current_user.avatar.tiny.url
+            -else
+              = image_tag User.find_by_id(project.user_id).avatar.tiny.url
+          .time_btn
+            %a{href: "#"}
+              = project.created_at.strftime("%H:%M " '%d.%m.%Y')
+          .content_text
+            %h3
+              = project.project_title
+            %p
+              = truncate("#{project.project_details}", :length => 70)
+          .new_msgs
+            %h3 2
+            %a{href: "#"} New Messages
+            %p
+              = project.project_starts_on
+            %p
+              = project.project_ends_on
+          .drop_arrow
+            %a{href: "#"} arrow
+        .info_main_box
+          .info
+            = project.invite_people
+            %textarea{cols: "50", rows: "4"}
+              = project.project_details
+          .info
+            = project.status
+            .attch_box
+              .attach
+                - project.pictures.each do |picture|
+                  = image_tag picture.attachment.tiny.url
+              .attach
+                = link_to "Attach New File", new_picture_path(:project_id => params[:project_id]), :class => "file_attach"
+                = hidden_field_tag :project_id, :value => "#{project.id}"
+          .info
+            =image_tag "chat.png"
+            .chat_box
+              %textarea{cols: "50", rows: "1"}
+              %a{href: "#"}
+                = image_tag "attachment.png"
+            .clearfix
+  - else
+    - @projects.each do |project|
+      #slideToggle.msgactive.msg
+        .profile_pic
+          - if params[:with] =="my_project"
+            = image_tag current_user.avatar.tiny.url
+          -else
+            = image_tag User.find_by_id(project.user_id).avatar.tiny.url
+        .time_btn
+          %a{href: "#"}
+            = project.created_at.strftime("%H:%M " '%d.%m.%Y')
+        .content_text
+          %h3
+            = project.project_title
+          %p
+            = truncate("#{project.project_details}", :length => 70)
+        .new_msgs
+          %h3 2
+          %a{href: "#"} New Messages
+          %p
+            = project.project_starts_on
+          %p
+            = project.project_ends_on
+        .drop_arrow
+          %a{href: "#"} arrow
+      .info_main_box
+        .info
+          = project.invite_people
+          %textarea{cols: "50", rows: "4"}
+            = project.project_details
+        .info
+          = project.status
+          .attch_box
+            .attach
+              - project.pictures.each do |picture|
+                = image_tag picture.attachment.tiny.url
+            .attach
+              = link_to "Attach New File", new_picture_path(:project_id => params[:project_id]), :class => "file_attach"
+              = hidden_field_tag :project_id, :value => "#{project.id}"
+        .info
+          =image_tag "chat.png"
+          .chat_box
+            %textarea{cols: "50", rows: "1"}
+            %a{href: "#"}
+              = image_tag "attachment.png"
+          .clearfix
+
+:javascript
+  $("#slideToggle").click(function () {
+    $('.info_main_box').slideToggle(600);
+  }); 
+  $("#slideToggle1").click(function () {
+    $('.info_main_box1').slideToggle(600);
+  });
+  $(window).load(function(){
+    $("[data-toggle]").click(function() {
+      var toggle_el = $(this).data("toggle");
+      $(toggle_el).toggleClass("open-sidebar");
+    });
+  });
+
+  $(document).ready(function(){
+    $("#all_project").click(function(){
+      $(this).addClass("active")
+    })
+    $("#my_project").click(function(){
+      $(this).addClass("active")
+    })
+    $("#upcoming_project").click(function(){
+      $(this).addClass("active")
+    })
+    $("#completed_project").click(function(){
+      $(this).addClass("active")
+    })
+  })

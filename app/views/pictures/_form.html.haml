@@ -1,0 +1,6 @@
+= form_for @picture do |f|
+  %div
+    = f.label :attachment
+    = f.file_field :attachment
+  %div
+    = f.submit "save"
