@@ -2,5 +2,6 @@
   %div
     = f.label :attachment
     = f.file_field :attachment
+    = hidden_field_tag :project_id, params[:project_id]
   %div
     = f.submit "save"

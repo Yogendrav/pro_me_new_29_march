@@ -5,15 +5,15 @@ class PicturesController < ApplicationController
 
 	def new
 		@picture = Picture.new
-		# respond_to do |format|
-		# 	format.js
-		# end
+		respond_to do |format|
+			format.js
+		end
 	end
 
 	def create
-		# debugger
-		# @project = Project.find_by_id("1")
+		@project = Project.find(params[:project_id])
 		@picture = @project.pictures.build(params[:picture])
+		debugger
 		if @picture.save
 			redirect_to projects_path
 		else
