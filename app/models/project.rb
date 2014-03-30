@@ -4,4 +4,6 @@ class Project < ActiveRecord::Base
   STATUS = %w[Running Pending]
   has_many :pictures
   accepts_nested_attributes_for :pictures
+  has_many :comments
+  accepts_nested_attributes_for :comments
 end

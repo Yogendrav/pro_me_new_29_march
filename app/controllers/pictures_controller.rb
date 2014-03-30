@@ -13,7 +13,6 @@ class PicturesController < ApplicationController
 	def create
 		@project = Project.find(params[:project_id])
 		@picture = @project.pictures.build(params[:picture])
-		debugger
 		if @picture.save
 			redirect_to projects_path
 		else

@@ -1,10 +1,10 @@
-#myModal.modal.fade{"aria-hidden" => "true", "aria-labelledby" => "myModalLabel", role: "dialog"}
+#myModal.modal.fade.project_form{"aria-hidden" => "true", "aria-labelledby" => "myModalLabel", role: "dialog"}
   = form_for @project do |f|
     .modal-dialog
       .modal-content
         .modal-header
           %button.close{"aria-hidden" => "true", "data-dismiss" => "modal", type: "button"} ×
-          %h4#myModalLabel.modal-title Project Form
+          %h4#myModalLabel.modal-title Project
         .modal-body
           .control-group
             = f.label(:project_title, :class => "control-label")

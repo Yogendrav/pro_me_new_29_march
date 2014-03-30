@@ -153,8 +153,12 @@
               =# hidden_field_tag :project_id, :value => "#{project.id}"
         .info
           =image_tag "chat.png"
+          .commented
+            - project.comments.each do |comment|
+              = comment.commenting
           .chat_box
-            %textarea{cols: "50", rows: "1"}
+            = link_to "Add Comment", new_comment_path(:project_id => project.id), :class => "add_comment1", :remote => true
+            %div.add_comment
             %a{href: "#"}
               = image_tag "attachment.png"
           .clearfix
@@ -186,6 +190,4 @@
     $("#completed_project").click(function(){
       $(this).addClass("active")
     })
-
-    
   })

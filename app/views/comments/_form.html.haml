@@ -1,0 +1,7 @@
+= form_for @comment do |f|
+  %div
+    = f.label :add_comment
+    = f.text_area :commenting
+    = hidden_field_tag :project_id, params[:project_id]
+  %div
+    = f.submit "Add Comment"

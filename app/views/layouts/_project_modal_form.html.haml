@@ -1,4 +1,4 @@
-.form-horizontal{:role => "form"}
+.project_form
   = form_for @project do |f|
     .modal-dialog.modal-lg
       .modal-content
@@ -9,11 +9,12 @@
           .control-group
             = f.label(:project_title, :class => "control-label ")
             .controls
-              = f.text_field :project_title
+              = f.text_field :project_title, :placeholder => "Title"
           .control-group
             = f.label(:created_by, :class => "control-label")
-            .controls
-              = f.text_field :project_created_by, :value => "#{current_user.first_name}", :readonly => true
+            .controls.left-inner-addon 
+              %i.icon-user
+                = f.text_field :project_created_by, :value => "#{current_user.first_name}", :readonly => true
           .control-group
             = f.label(:project_details, :class => "control-label")
             .controls
@@ -21,13 +22,13 @@
           .control-group
             = f.label(:starts_at, :class => "control-label")
             .controls
-              = f.text_field :project_starts_on, format: :long
+              = f.text_field :project_starts_on, format: :long, :placeholder => "YYYY-MM-DD"
               %td#startDate 2012-02-06
               / #alert.alert.alert-error{style: "display: block;"}
           .control-group
             = f.label(:ends_at, :class => "control-label")
             .controls
-              = f.text_field :project_ends_on, format: :long
+              = f.text_field :project_ends_on, format: :long, :placeholder => "YYYY-MM-DD"
               %td#endDate 2012-02-25
               / #alert.alert.alert-error{style: "display: block;"}
               
